@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- ✅ Load CSS file for jQuery ui  -->
+    <link
+      href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css"
+      rel="stylesheet"
+    />
+
+    <!-- ✅ load jQuery ✅ -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- ✅ load jquery UI ✅ -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+      integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer">
+    </script>
+  </head>
+
+  <body>
+    <p>Date: <input type="text" id="datepicker" /></p>
+
+    
+  </body>
+  <script>
+    $(document).ready(function () {	
+	
+			let arrayInicial = ['n','2','&','a','l','9','$','q','47','i','a','j','b','z','%','8'];
+			console.log(arrayInicial)
+			let arrayReverse = ['n','2','&','a','l','9','$','q','47','i','a','j','b','z','%','8'].reverse();
+			
+			//console.log(arrayReverse +" => matriz inviértala")
+			
+			arrayReverse.splice(2, 1, '&');
+			arrayReverse.splice(6, 1, '$');
+			arrayReverse.splice(14, 1, '%');		
+			
+			var items = arrayInicial.filter( function (tag) {
+				if(arrayReverse.includes(tag) == false)
+				{
+					arrayReverse.push(tag)				
+				}		   
+			});			
+			console.log(arrayReverse)
+			let arrayPosicionCaracteres = [{"&": 2, "$": 6, "%": 14}];
+			
+			for(let i = 0; i < arrayPosicionCaracteres.length; i++)
+			{
+				//console.log(arrayPosicionCaracteres[i]['&'])				
+				$.each(arrayReverse, function(index, val) { 						
+					console.log(index, val)
+				});
+			}
+			
+	
+		/*  $("#datepicker").datepicker({
+		  dateFormat: "dd/mm/yy"
+		});*/
+
+    });
+</script>
+</html>
