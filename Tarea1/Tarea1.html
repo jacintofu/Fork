@@ -2,11 +2,6 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- ✅ Load CSS file for jQuery ui  -->
-    <link
-      href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css"
-      rel="stylesheet"
-    />
 
     <!-- ✅ load jQuery ✅ -->
     <script
@@ -24,46 +19,27 @@
     </script>
   </head>
 
-  <body>
-    <p>Date: <input type="text" id="datepicker" /></p>
-
-    
+  <body>    
   </body>
   <script>
     $(document).ready(function () {	
 	
-			let arrayInicial = ['n','2','&','a','l','9','$','q','47','i','a','j','b','z','%','8'];
-			console.log(arrayInicial)
-			let arrayReverse = ['n','2','&','a','l','9','$','q','47','i','a','j','b','z','%','8'].reverse();
-			
-			//console.log(arrayReverse +" => matriz inviértala")
-			
-			arrayReverse.splice(2, 1, '&');
-			arrayReverse.splice(6, 1, '$');
-			arrayReverse.splice(14, 1, '%');		
-			
-			var items = arrayInicial.filter( function (tag) {
-				if(arrayReverse.includes(tag) == false)
-				{
-					arrayReverse.push(tag)				
-				}		   
-			});			
-			console.log(arrayReverse)
-			let arrayPosicionCaracteres = [{"&": 2, "$": 6, "%": 14}];
-			
-			for(let i = 0; i < arrayPosicionCaracteres.length; i++)
-			{
-				//console.log(arrayPosicionCaracteres[i]['&'])				
-				$.each(arrayReverse, function(index, val) { 						
-					console.log(index, val)
-				});
-			}
-			
-	
-		/*  $("#datepicker").datepicker({
-		  dateFormat: "dd/mm/yy"
-		});*/
-
+			const array = ["n","2","&","a","l","9","$","q","47","i","a","j","b","z","%","8"];
+			const nonAlphaNumeric = [];
+			const result = [];
+			array.forEach((item, index) => {
+				if (/^[A-Za-z0-9]+$/.test(item)) {
+					result.push(item);
+				} else {
+					nonAlphaNumeric.push({item, index});
+				}
+			});
+			result.reverse();
+			nonAlphaNumeric.forEach(item => {
+				result.splice(item.index, 0, item.item);
+			});
+			console.log(array);
+			console.log(result);
     });
 </script>
 </html>
