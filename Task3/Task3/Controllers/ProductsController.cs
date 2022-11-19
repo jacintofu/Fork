@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -29,9 +30,19 @@ namespace Task3.Controllers
         }
 
         // GET: Products
+        [Obsolete]
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Products.ToListAsync());
+            var result = await _context.Products.ToListAsync();
+            var ProductsFlder = "Products";
+            string FilePath = Path.Combine(hostingEnv.WebRootPath, ProductsFlder);
+
+            foreach (var item in result)
+            {
+                string myurl = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{ProductsFlder}/{item.Image}";
+                item.Image = myurl;
+            }
+            return View(result);
         }
 
         // GET: Products/Details/5
@@ -66,6 +77,12 @@ namespace Task3.Controllers
         [Obsolete]
         public async Task<IActionResult> Create([Bind("Id,Description,Price")] Products products, IFormFile file)
         {
+            var resulProduct = _context.Products.FirstOrDefault(x => x.Description == products.Description);
+            if (resulProduct != null)
+            {
+                return View(products);
+            }
+
             var ProductsFlder = "Products";
             string FilePath = Path.Combine(hostingEnv.WebRootPath, ProductsFlder);
 
@@ -83,7 +100,6 @@ namespace Task3.Controllers
             }
             else
             {
-
                 _context.Add(products);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
